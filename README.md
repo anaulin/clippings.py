@@ -1,5 +1,9 @@
-# clippings.py
-A Python script to extract book highlights from a Kindle MyClippings.txt into a structured spreadsheet.
+# clippings.py <!-- omit in toc -->
+A Python script to extract book highlights from a Kindle MyClippings.txt file into a structured file.
+
+- [Installation](#installation)
+- [Running](#running)
+- [Environment and dependencies setup](#environment-and-dependencies-setup)
 
 ## Installation
 
