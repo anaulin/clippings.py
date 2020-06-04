@@ -4,6 +4,7 @@ A Python script to extract book highlights from a Kindle MyClippings.txt file in
 - [Installation](#installation)
 - [Running](#running)
 - [Environment and dependencies setup](#environment-and-dependencies-setup)
+- [Related work](#related-work)
 
 ## Installation
 
@@ -54,3 +55,7 @@ Install requirements:
 ```
 pip install -r requirements.txt
 ```
+
+## Related work
+
+[kindle-clippings](https://github.com/lvzon/kindle-clippings) is a Python script that processes your `My Clippings.txt` file and outputs clippings as RST files.
