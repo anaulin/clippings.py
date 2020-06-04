@@ -130,3 +130,6 @@ dmypy.json
 
 # VSCode bullshit
 .vscode/
+
+# The csv file this script produces by default
+clippings.csv
