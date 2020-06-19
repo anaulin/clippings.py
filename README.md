@@ -38,7 +38,6 @@ Options:
   -o FILE       Specify output file [default ./clippings.csv]
 ```
 
-
 ## Environment and dependencies setup
 
 Create new virtual env:
