@@ -54,6 +54,18 @@ def get_location_date(line):
     location = YOUR_HIGHLIGHT_ON_REGEX.match(first_half).groups(0)[0]
     return (location.strip(), date.strip())
 
+def add_clipping_to_data(item_name, highlight_lines, location, date, author, data):
+    """Adds the given clipping info to the 'data' dict."""
+    clipping = {
+        'highlight': "\n".join(highlight_lines),
+        'location': location,
+        'date': date
+    }
+    if item_name not in data:
+        data[item_name] = {'author': author, 'clippings': [clipping]}
+    else:
+        data[item_name]['clippings'].append(clipping)
+
 def load_file(infile):
     """Loads the clippings data in the given file descriptor.
 
@@ -67,7 +79,7 @@ def load_file(infile):
               value = { author_name, clippings: [{highlight, location, date}] }
     """
     data = {}
-    with open(infile, 'r') as inf:
+    with open(infile, 'r', encoding='utf-8-sig') as inf:
         item_name = author = location = date = None
         highlight_lines = []
         in_highlight = False
@@ -79,26 +91,22 @@ def load_file(infile):
                     location, date = get_location_date(line)
                     in_highlight = True
             elif line.startswith(SEPARATOR):
-                clipping = {
-                    'highlight': "\n".join(highlight_lines),
-                    'location': location,
-                    'date': date
-                }
-                if item_name not in data:
-                    data[item_name] = {'author': author, 'clippings': [clipping]}
-                else:
-                    data[item_name]['clippings'].append(clipping)
+                add_clipping_to_data(item_name, highlight_lines, location, date, author, data)
                 in_highlight = False
                 item_name = author = location = date = None
                 highlight_lines = []
             else:
-                highlight_lines.append(line.strip())
+                if line.strip():
+                  highlight_lines.append(line.strip())
+        if highlight_lines:
+            add_clipping_to_data(item_name, highlight_lines, location, date, author, data)
     return data
 
 def write_to_csv(data, outfile):
     """Writes the given data to the outfile."""
     with open(outfile, 'w') as file:
         writer = csv.writer(file)
+        writer.writerow(['Title', 'Author', 'Highlight', 'Location', 'Date'])
         for item, values in data.items():
             author = values['author']
             for clipping in values['clippings']:

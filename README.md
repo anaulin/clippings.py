@@ -24,7 +24,7 @@ $ ./clippings.py extract MyClippints.txt
 
 Full usage:
 ```
-$ ./clippings.py --help
+$ ./clippings/clippings.py --help
 MyClippings.txt management tool.
 
 Usage:
