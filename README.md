@@ -19,7 +19,7 @@ pip install -r requirements.txt
 
 Extract highlights from MyClippings.txt file to `.csv` spreadsheet:
 ```
-$ ./clippings.py extract MyClippints.txt
+$ ./clippings.py extract MyClippings.txt
 ```
 
 Full usage:
