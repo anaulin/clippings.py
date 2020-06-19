@@ -133,3 +133,6 @@ dmypy.json
 
 # The csv file this script produces by default
 clippings.csv
+
+# Mac OS debris
+.DS_Store
