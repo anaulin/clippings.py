@@ -28,14 +28,15 @@ $ ./clippings/clippings.py --help
 MyClippings.txt management tool.
 
 Usage:
-  clippings.py extract FILE [-o FILE]
+  clippings.py extract INFILE [-o FILE] [--no-title]
   clippings.py (-h | --help)
   clippings.py --version
 
 Options:
-  -h --help     Show this screen
-  --version     Show version
   -o FILE       Specify output file [default ./clippings.csv]
+  -h --help     Show this screen
+  --no-title    Omit title row in output.
+  --version     Show version
 ```
 
 ## Environment and dependencies setup
