@@ -26,3 +26,11 @@ def test_extract():
         assert result[0] == ['Title', 'Author', 'Highlight', 'Location', 'Date']
         for row in result[1:]:
             assert row[2].startswith('\n') == False
+
+def test_extract_no_title():
+    with tempfile.NamedTemporaryFile() as temp:
+        clippings.extract(TEST_INFILE, temp.name, omit_title=True)
+        result = get_csv_lines(temp.name)
+        assert len(result) == 10
+        for row in result:
+            assert row[2].startswith('\n') == False

@@ -2,13 +2,14 @@
 """My Clippings.txt management tool.
 
 Usage:
-  clippings.py extract INFILE [-o FILE]
+  clippings.py extract INFILE [-o FILE] [--no-title]
   clippings.py (-h | --help)
   clippings.py --version
 
 Options:
   -o FILE       Specify output file [default ./clippings.csv]
   -h --help     Show this screen
+  --no-title    Omit title row in output.
   --version     Show version
 
 """
@@ -102,11 +103,12 @@ def load_file(infile):
             add_clipping_to_data(item_name, highlight_lines, location, date, author, data)
     return data
 
-def write_to_csv(data, outfile):
+def write_to_csv(data, outfile, omit_title):
     """Writes the given data to the outfile."""
     with open(outfile, 'w') as file:
         writer = csv.writer(file)
-        writer.writerow(['Title', 'Author', 'Highlight', 'Location', 'Date'])
+        if not omit_title:
+            writer.writerow(['Title', 'Author', 'Highlight', 'Location', 'Date'])
         for item, values in data.items():
             author = values['author']
             for clipping in values['clippings']:
@@ -114,14 +116,18 @@ def write_to_csv(data, outfile):
                     item, author, clipping['highlight'], clipping['location'], clipping['date']])
 
 
-def extract(infile, outfile):
+def extract(infile, outfile, omit_title=False):
     """Extract the contents of infile into outfile."""
     print(f"Extracting {infile} into {outfile}")
     clippings = load_file(infile)
     print(f"Extracted clippings from {len(clippings.keys())} books")
-    write_to_csv(clippings, outfile)
+    write_to_csv(clippings, outfile, omit_title)
 
 if __name__ == '__main__':
     arguments = docopt(__doc__, version='My Clippings.txt Manager v0.1')
+    no_title = arguments['--no-title'] or False
     if arguments['extract']:
-        extract(arguments['INFILE'], arguments['-o'] or './clippings.csv')
+        extract(
+            arguments['INFILE'],
+            arguments['-o'] or './clippings.csv',
+            omit_title=arguments['--no-title'])
